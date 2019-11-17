@@ -1,0 +1,11 @@
+<h2>Create week business hours</h2>
+
+<%= form_with scope: :week, url: weeks_path, local: true do |form| %>
+  <p>
+    <%= form.label :week_date %><br />
+    <%= form.week_field :week_date %>
+  </p>
+  <p>
+    <%= form.submit value="Create week"%>
+  </p>
+<% end %>
