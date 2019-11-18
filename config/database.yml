@@ -22,8 +22,8 @@ test:
 
 production:
   adapter: postgresql
-  database: k-l-u_production
-  username: k-l-u
-  password: <%= ENV['MYAPP_DATABASE_PASSWORD'] %>
+  database: kolau_production
+  username: kolau
+  password: <%= ENV['KOLAU_DATABASE_PASSWORD'] %>
   pool: 5
   timeout: 5000
