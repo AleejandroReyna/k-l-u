@@ -1,10 +1,13 @@
-<h3>Week:</h3> <%= @week.week %>
+<h3>Week: <%= @week.week %></h3>
 
 <h4>days:</h4>
 
-<% @week.days.each do |day| %>
-  <li>
-    <%= day.week_day %> - <%= day.start %> - <%= day.end %>
-  </li>
+<ul>
+  <% @week.days.each do |day| %>
+    <li>
+      <%= day.week_day %> - <%= day.start %> - <%= day.end %>
+    </li>
+  <% end %>
+</ul>
 
-<% end %>
+<%= link_to "View all business weeks", weeks_path %>

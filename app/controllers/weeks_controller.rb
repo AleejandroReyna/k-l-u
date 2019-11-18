@@ -29,7 +29,9 @@ class WeeksController < ApplicationController
     days_count = 0
 
     loop do
-      @valid = @days[days_count].try_to_save ? true : false
+      if !params["%s_all_day" % @days[days_count].week_day]
+       @valid = @days[days_count].try_to_save ? true : false
+      end
       days_count = days_count + 1
       break if not @valid or days_count == @days.length
     end
@@ -44,8 +46,8 @@ class WeeksController < ApplicationController
     @week = Week.new(week_params)
     @week.save
     @days.each do |day|
-      day.start = day.start_date
-      day.end = day.end_date
+      day.start = params["%s_all_day" % day.week_day] ? "00:00" : day.start_date
+      day.end = params["%s_all_day" % day.week_day] ? "23:59" : day.end_date
       day.week_id = @week.id
       day.save
     end

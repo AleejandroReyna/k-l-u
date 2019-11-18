@@ -9,9 +9,19 @@
   </head>
 
   <body>
-    <% flash.each do |key, value| %>
-      <%= content_tag :div, value, class: "flash #{key}" %>
-    <% end %>
-    <%= yield %>
+    <header>
+      <nav>
+        <%= link_to "Business weeks", weeks_path %>
+        <%= link_to "Add New Week", new_week_path %>
+      </nav>
+    </header>
+    <div class="alerts">
+      <% flash.each do |key, value| %>
+        <%= content_tag :div, value, class: "flash #{key}" %>
+      <% end %>
+    </div>
+    <div class="content">
+      <%= yield %>
+    </div>
   </body>
 </html>

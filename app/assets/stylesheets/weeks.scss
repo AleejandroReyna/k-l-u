@@ -1,3 +1,94 @@
 // Place all the styles related to the Weeks controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f7f7f7;
+  margin: 0;
+  padding: 0;
+  font-family: Arial;
+
+  header {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-end;
+    background: #4268D6;
+    padding: 1em;
+
+    nav {
+      display: flex;
+    }
+
+    a {
+      display: block;
+      padding: 1em;
+      text-decoration: none;
+      color: #fff;
+      background: rgba(0,0,0, .3);
+      border-radius: 5px;
+      margin-left: 1em;
+    }
+  }
+
+  .alerts,
+  .content {
+    max-width: 992px;
+    position: relative;
+    margin: 0 auto;
+  }
+
+  .content {
+    padding: 3em;
+    background: #fff;
+    margin: 2em auto;
+  }
+
+  .content a {
+    color: #4268D6;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 1em;
+  }
+
+  ul {
+    li {
+      padding: .5em 0;
+    }
+  }
+
+  form {
+    .working-hours-fields {
+      display: flex;
+      .day {
+        padding: 0 1em;
+        input[type="text"] {
+          margin-bottom: 1em;
+          padding: .5em 1em;
+          width: 80px;
+        }
+
+        input:not([type="checkbox"]) {
+          display: block;
+        }
+      }
+    }
+  }
+}
