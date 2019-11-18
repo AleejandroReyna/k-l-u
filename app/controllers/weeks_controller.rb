@@ -46,8 +46,8 @@ class WeeksController < ApplicationController
     @week = Week.new(week_params)
     @week.save
     @days.each do |day|
-      day.start = params["%s_all_day" % day.week_day] ? "00:00" : day.start_date
-      day.end = params["%s_all_day" % day.week_day] ? "23:59" : day.end_date
+      day.start = params["%s_all_day" % day.week_day] == 1 ? "00:00" : day.start_date
+      day.end = params["%s_all_day" % day.week_day] == 1 ? "23:59" : day.end_date
       day.week_id = @week.id
       day.save
     end
