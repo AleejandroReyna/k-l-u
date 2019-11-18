@@ -1,0 +1,10 @@
+<h4>Weeks to work</h4>
+
+<ul>
+  <% @weeks.each do |week| %>
+    <li>
+      <%= week.id %> - <%= week.week %> |
+      <%= link_to "View week", week %>
+    </li>
+  <% end %>
+</ul>
