@@ -1,8 +1,15 @@
 class WeeksController < ApplicationController
 
   def  new
+    @week = params['week'] ? params['week']['week'] : ""
     @days ||= []
-    week_days.each { |day| @days.push(Day.new(week_day: day)) }
+    week_days.each do |day|
+      start_date = params["%s_start" % day] ? params["%s_start" % day] : ""
+      end_date = params["%s_end" % day] ? params["%s_end" % day] : ""
+      @days.push(
+          Day.new(week_day: day, start: start_date, end: end_date)
+      )
+    end
   end
 
   def index
@@ -18,16 +25,33 @@ class WeeksController < ApplicationController
     week_days.each do |day| @days.push(Day.new(week_day: day, start: params["%s_start" % day],
                                                end: params["%s_end" % day]))
     end
-    @days.each do |day|
-      day.try_to_save
+    @valid = true
+    days_count = 0
+
+    loop do
+      @valid = @days[days_count].try_to_save ? true : false
+      days_count = days_count + 1
+      break if not @valid or days_count == @days.length
     end
 
-    render plain: @days.inspect
+    puts("here", @valid)
 
-    #@week = Week.new(week_params)
-    #print(@week)
-    #@week.save
-    #redirect_to @week
+    if !@valid
+      flash[:notice] = "Verify your data and try again"
+      return redirect_to action: 'new', params: request.parameters
+    end
+
+    @week = Week.new(week_params)
+    @week.save
+    @days.each do |day|
+      day.start = day.start_date
+      day.end = day.end_date
+      day.week_id = @week.id
+      day.save
+    end
+
+    flash[:notice] = "Week business hours created"
+    redirect_to @week
   end
 
   private

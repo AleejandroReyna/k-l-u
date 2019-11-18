@@ -3,7 +3,7 @@
 <%= form_with scope: :week, url: weeks_path, local: true do |form| %>
   <p>
     <%= form.label :week_date %><br />
-    <%= form.week_field :week %>
+    <%= form.week_field :week, value: @week %>
   </p>
 
   <h4>working hours: *</h4>
@@ -11,8 +11,8 @@
     <% @days.each do |day| %>
       <div class="day <%= day.week_day %>>">
         <%=form.label day.week_day %>
-        <%= form.text_field day.start, name: "%s_start" % day.week_day, id: "%s_start" % day.week_day %>
-        <%= form.text_field day.end, name: "%s_end" % day.week_day, id: "%s_end" % day.week_day %>
+        <%= form.text_field day.start, name: "%s_start" % day.week_day, id: "%s_start" % day.week_day, value: day.start %>
+        <%= form.text_field day.end, name: "%s_end" % day.week_day, id: "%s_end" % day.week_day, value: day.end %>
         <%= form.label "24 hours"%>
         <%= form.check_box("%s_all_day" %day.week_day,
                            name: "%s_all_day" %day.week_day,

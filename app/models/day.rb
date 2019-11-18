@@ -1,8 +1,8 @@
 class Day < ApplicationRecord
   belongs_to :week
 
-  validates_presence_of :week_day, :week, :start, :end
-  validates :week_day, inclusion: { in: %w(mon, tue, wed, thu, fri, sat, sun)}
+  validates_presence_of :week_day, :start, :end
+  validates :week_day, inclusion: { in: %w(mon tue wed thu fri sat sun)}
 
   def check_start_time_stand
     self.check_time_stand(self.start)
@@ -13,14 +13,22 @@ class Day < ApplicationRecord
   end
 
   def try_to_save
-      start_date = self.check_start_time_stand
-      if start_date
-        puts(self.week_day, self.check_if_valid_parse_time(start_date))
+      start_date = self.check_if_valid_parse_time(self.check_start_time_stand)
+      end_date =self.check_if_valid_parse_time(self.check_end_time_stand)
+      if end_date and start_date
+        if end_date > start_date
+          return true
+        end
       end
-      end_date = self.check_end_time_stand
-      if end_date
-        puts(self.week_day, self.check_if_valid_parse_time(end_date))
-      end
+      false
+  end
+
+  def start_date
+    self.check_if_valid_parse_time(self.check_start_time_stand).to_s(:time)
+  end
+
+  def end_date
+    self.check_if_valid_parse_time(self.check_end_time_stand).to_s(:time)
   end
 
   def check_is_valid_number(param, limit)
@@ -47,6 +55,8 @@ class Day < ApplicationRecord
       return self.check_valid_hour(param, "am")
     elsif param.include? "pm"
       return self.check_valid_hour(param, "pm")
+    elsif check_is_valid_number(param, 23)
+      return self.check_valid_direct_hour("0%s:00" % param)
     end
     false
   end

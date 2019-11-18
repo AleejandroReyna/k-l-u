@@ -1,1 +1,10 @@
-Week: <%= @week.week %>
+<h3>Week:</h3> <%= @week.week %>
+
+<h4>days:</h4>
+
+<% @week.days.each do |day| %>
+  <li>
+    <%= day.week_day %> - <%= day.start %> - <%= day.end %>
+  </li>
+
+<% end %>
