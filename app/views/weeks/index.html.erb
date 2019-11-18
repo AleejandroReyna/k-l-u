@@ -4,7 +4,9 @@
   <% @weeks.each do |week| %>
     <li>
       <%= week.id %> - <%= week.week %> |
-      <%= link_to "View week", week %>
+      <%= link_to "View week %s" % week.id , week %>
     </li>
   <% end %>
 </ul>
+
+<%=link_to "Add business week", new_week_path %>
