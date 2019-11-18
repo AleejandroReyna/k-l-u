@@ -1,9 +1,8 @@
 class WeeksController < ApplicationController
 
   def  new
-    days = Array["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
     @days ||= []
-    days.each { |day| @days.push(Day.new(week_day: day)) }
+    week_days.each { |day| @days.push(Day.new(week_day: day)) }
   end
 
   def index
@@ -15,10 +14,20 @@ class WeeksController < ApplicationController
   end
 
   def create
-    @week = Week.new(week_params)
-    print(@week)
-    @week.save
-    redirect_to @week
+    @days ||= []
+    week_days.each do |day| @days.push(Day.new(week_day: day, start: params["%s_start" % day],
+                                               end: params["%s_end" % day]))
+    end
+    @days.each do |day|
+      day.try_to_save
+    end
+
+    render plain: @days.inspect
+
+    #@week = Week.new(week_params)
+    #print(@week)
+    #@week.save
+    #redirect_to @week
   end
 
   private
@@ -31,5 +40,9 @@ class WeeksController < ApplicationController
                                    :fri_start, :fri_end, :fri_all_day,
                                    :sat_start, :sat_end, :sat_all_day,
                                    :sun_start, :sun_end, :sun_all_day)
+    end
+
+    def week_days
+      Array["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
     end
 end
